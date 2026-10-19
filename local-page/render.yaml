@@ -1,0 +1,28 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: mygov-mirror
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: NODE_ENV
+        value: production
+      - key: OFFLINE_PRIVACY_MODE
+        value: "false"
+      - key: PUBLIC_SITE_URL
+        sync: false
+      - key: PARTNER_APP_URL
+        sync: false
+      - key: PARTNER_API_URL
+        sync: false
+      - key: PARTNER_UTM_SOURCE
+        value: mygov-mirror
+      - key: PARTNER_UTM_CAMPAIGN
+        value: check-eligibility
+      - key: ALLOWED_PARTNER_ORIGINS
+        sync: false

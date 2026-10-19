@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="14px" viewBox="0 0 16 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icons / Arrow / Standard</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="M-00-04_Global-Search" transform="translate(-32.000000, -236.000000)" fill="#FFFFFF">
+            <g id="Group" transform="translate(0.000000, 202.000000)">
+                <g id="Global-/-Header-/-Mobile-/-Navigation-/-Back">
+                    <g id="Icons-/-Arrow-/-Standard" transform="translate(40.000000, 41.000000) scale(-1, 1) translate(-40.000000, -41.000000) translate(32.000000, 34.000000)">
+                        <path d="M7.1153041,0 L8.61538462,1.47577158 L3.961,6.054 L16,6.05412256 L16,7.87035933 L3.885,7.87 L8.61538462,12.5242284 L7.1153041,14 L0,7 L7.1153041,0 Z" id="Colour" transform="translate(8.000000, 7.000000) rotate(-180.000000) translate(-8.000000, -7.000000) "></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

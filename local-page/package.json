@@ -1,0 +1,16 @@
+{
+  "name": "mygov-mirror",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static myGov-style mirror with partner project integration",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

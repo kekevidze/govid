@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icons / System / Clear</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="M-05-Navigation_Global-Search-Typing" transform="translate(-369.000000, -330.000000)">
+            <g id="Group" transform="translate(0.000000, 202.000000)">
+                <g id="Search" transform="translate(20.000000, 121.000000)">
+                    <g id="Clear-Button" transform="translate(302.000000, 8.000000)">
+                        <g id="Icons-/-System-/-Clear" transform="translate(48.000000, 0.000000)">
+                            <g>
+                                <path d="M12,0.156842105 C18.54,0.156842105 23.8421053,5.45894737 23.8421053,11.9989474 C23.8421053,18.5389474 18.54,23.8410526 12,23.8410526 C5.46,23.8410526 0.157894737,18.5389474 0.157894737,11.9989474 C0.157894737,5.45894737 5.46,0.156842105 12,0.156842105 Z" id="Path" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M12.7,5 L12.7,11.3 L19,11.3 L19,12.7 L12.7,12.7 L12.7,19 L11.3,19 L11.3,12.7 L5,12.7 L5,11.3 L11.3,11.3 L11.3,5 L12.7,5 Z" id="Combined-Shape" fill="#FFFFFF" transform="translate(12.000000, 12.000000) rotate(-315.000000) translate(-12.000000, -12.000000) "></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

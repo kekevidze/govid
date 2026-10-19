@@ -1,0 +1,38 @@
+<svg
+  width="60"
+  height="60"
+  viewBox="0 0 210 210"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  
+>
+    <defs>
+        <linearGradient id="spinner-secondHalf">
+            <stop offset="0%" stop-opacity="0" stop-color="#FFFFFF" />
+            <stop offset="100%" stop-opacity="0.5" stop-color="#53B3DD" />
+        </linearGradient>
+        <linearGradient id="spinner-firstHalf">
+            <stop offset="0%" stop-opacity="1" stop-color="#99E1F3" />
+            <stop offset="100%" stop-opacity="0.5" stop-color="#53B3DD" />
+        </linearGradient>
+    </defs>
+    <g>
+        <path transform="translate(5,5)" stroke-width="13px" stroke="url(#spinner-secondHalf)" d="M 4 100 A 96 96 0 0 1 196 100" />
+        <path  transform="translate(5,5)" stroke-width="13px" stroke="url(#spinner-firstHalf)" d="M 196 100 A 96 96 0 0 1 4 100" />
+        <!-- 1deg extra path to have the round end cap -->
+        <path  transform="translate(5,5)"
+            stroke="#99E1F3"
+            stroke-width="13px"
+            stroke-linecap="round"
+            d="M 4 100 A 96 96 0 0 1 4 98"
+            />
+        <animateTransform
+            from="0 105 105"
+            to="360 105 105"
+            attributeName="transform"
+            type="rotate"
+            repeatCount="indefinite"
+            dur="2100ms"
+        />
+    </g>
+</svg>

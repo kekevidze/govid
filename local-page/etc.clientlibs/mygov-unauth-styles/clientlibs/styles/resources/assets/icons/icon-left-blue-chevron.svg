@@ -1,0 +1,18 @@
+<svg id="Icon_System_Chevron" data-name="Icon / System / Chevron" xmlns="http://www.w3.org/2000/svg" width="12" height="18" viewBox="0 0 12 18">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        fill: #006ce0;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <rect id="Rectangle_301" data-name="Rectangle 301" class="cls-1" width="12" height="18"/>
+  <g id="Icons_System_Chevron" data-name="Icons / System / Chevron" transform="translate(12 18) rotate(180)">
+    <path id="Icons_System_Chevron_Right" data-name="Icons / System / Chevron / Right" class="cls-2" d="M9.551,7.9l7.1,7.1-7.1,7.1,1.9,1.9,9-9-9-9Z" transform="translate(-9.551 -6)"/>
+  </g>
+</svg>
